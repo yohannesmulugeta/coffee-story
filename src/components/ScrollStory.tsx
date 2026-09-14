@@ -7,16 +7,19 @@ import { StoryIntro } from "./StoryIntro";
 export function ScrollStory() {
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const status = useScrollVideo({ containerRef, videoRef });
+  const { status, reducedMotion } = useScrollVideo({ containerRef, videoRef });
+  const staticStory = status === "error" || reducedMotion;
 
   return (
-    <section id="story" className="story-scroll" ref={containerRef} aria-label="Three generations of coffee heritage">
+    <section id="story" className={`story-scroll${staticStory ? " story-scroll--static" : ""}`} ref={containerRef} aria-label="Three generations of coffee heritage">
       <div className="story-viewport">
         <div className={`video-shell ${status === "error" ? "video-shell--fallback" : ""}`}>
+          <img className="hero-poster" src={`${import.meta.env.BASE_URL}video/coffee-poster.jpg`} alt="" aria-hidden="true" />
           <video
             ref={videoRef}
             className="hero-video"
-            src={`${import.meta.env.BASE_URL}video/coffee-legacy.mp4`}
+            src={`${import.meta.env.BASE_URL}video/coffee-scrub-v2.mp4`}
+            poster={`${import.meta.env.BASE_URL}video/coffee-poster.jpg`}
             muted
             playsInline
             preload="auto"
@@ -27,21 +30,16 @@ export function ScrollStory() {
           <div className="side-vignette" />
         </div>
 
-        {status === "loading" && (
+        {status === "loading" && !reducedMotion && (
           <div className="video-state" role="status" aria-live="polite">
             <span>COFFEE LEGACY</span>
             <i />
             <small>Preparing the journey</small>
           </div>
         )}
-        {status === "error" && (
-          <div className="video-state video-state--error" role="status">
-            <span>COFFEE LEGACY</span>
-            <small>The visual story is unavailable. The legacy continues below.</small>
-          </div>
-        )}
 
         <div className="story-copy-layer">
+          {status === "error" && <p className="video-notice" role="status">Video unavailable. Read the story below.</p>}
           <StoryIntro />
           {generations.map((chapter) => (
             <StoryChapter key={chapter.number} chapter={chapter} />

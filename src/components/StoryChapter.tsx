@@ -11,7 +11,6 @@ export function StoryChapter({ chapter }: StoryChapterProps) {
       data-story-copy
       data-start={chapter.range[0]}
       data-end={chapter.range[1]}
-      style={{ opacity: 0 }}
     >
       <p className="chapter-label">
         <span>{chapter.number}</span>

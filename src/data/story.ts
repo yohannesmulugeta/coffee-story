@@ -22,7 +22,7 @@ export const intro = {
   title: "Three Generations.\nOne Coffee Journey.",
   description:
     "A story rooted in the land, carried through generations, and continuing into the future.",
-  range: [0, 0.18] as [number, number],
+  range: [0, 0.11] as [number, number],
 };
 
 export const generations: StoryChapter[] = [
@@ -33,7 +33,7 @@ export const generations: StoryChapter[] = [
     description:
       "Before there was a company, there was a relationship with coffee — with the soil, the harvest, and the patience required to grow something worth passing on.",
     position: "left",
-    range: [0.08, 0.33],
+    range: [0.12, 0.34],
   },
   {
     number: "02",

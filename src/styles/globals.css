@@ -175,6 +175,15 @@ a:focus-visible {
   object-position: 50% 18%;
 }
 
+.hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
 .video-shell--fallback .hero-video {
   display: none;
 }
@@ -300,9 +309,9 @@ a:focus-visible {
 }
 
 .story-copy h1 {
-  max-width: 12ch;
-  font-size: clamp(3.25rem, 6.3vw, 6.8rem);
-  line-height: 0.86;
+  max-width: none;
+  font-size: clamp(2.5rem, 5.4vw, 4.7rem);
+  line-height: 1.02;
 }
 
 .story-copy h1 span,
@@ -311,10 +320,13 @@ a:focus-visible {
 }
 
 .story-copy h2 {
-  max-width: 10ch;
-  font-size: clamp(3rem, 5.1vw, 5.7rem);
-  line-height: 0.92;
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 4.4vw, 4.5rem);
+  line-height: 1.04;
 }
+
+.story-copy--chapter { opacity: 0; visibility: hidden; }
+.story-copy { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.4); }
 
 .story-description {
   max-width: 34rem;
@@ -622,11 +634,11 @@ a:focus-visible {
   }
 
   .story-copy h1 {
-    font-size: clamp(3rem, 14vw, 5.4rem);
+    font-size: clamp(2.4rem, 6.8vw, 4.1rem);
   }
 
   .story-copy h2 {
-    font-size: clamp(2.9rem, 13vw, 5rem);
+    font-size: clamp(2.4rem, 6.5vw, 4rem);
   }
 
   .story-description {
@@ -706,18 +718,16 @@ a:focus-visible {
   }
 
   .story-copy h1 {
-    font-size: clamp(2.9rem, 13.6vw, 4.4rem);
+    font-size: clamp(2.1rem, 9vw, 2.9rem);
   }
 
   .story-copy h2 {
-    font-size: clamp(2.7rem, 12.4vw, 4.1rem);
+    font-size: clamp(2.1rem, 9vw, 2.9rem);
   }
 
   .story-description {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .scroll-cue {
@@ -794,6 +804,7 @@ a:focus-visible {
     flex-direction: column;
     justify-content: flex-end;
     opacity: 1 !important;
+    visibility: visible !important;
     transform: none !important;
   }
 
@@ -805,4 +816,52 @@ a:focus-visible {
   .story-progress {
     display: none;
   }
+}
+
+/* Error and reduced-motion stories use ordinary document flow. */
+.story-scroll--static { height: auto; }
+.story-scroll--static .story-viewport {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+.story-scroll--static .video-shell { height: 100svh; }
+.story-scroll--static .hero-video { display: none; }
+.story-scroll--static .story-copy-layer {
+  position: relative;
+  display: grid;
+  gap: 3rem;
+  padding: 7rem var(--page-pad) 4rem;
+}
+.story-scroll--static .story-copy {
+  position: relative;
+  inset: auto;
+  width: min(36rem, 100%);
+  min-height: 45svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+.story-scroll--static .scroll-cue,
+.story-scroll--static .story-progress { display: none; }
+.video-notice {
+  margin: 0;
+  padding: 0.7rem 0;
+  font-size: 0.875rem;
+  color: #f2ebdd;
+}
+@media (min-width: 801px) {
+  .story-copy--intro { width: min(43rem, calc(100% - var(--page-pad) * 2)); }
+  .side-vignette {
+    background: linear-gradient(90deg, rgba(12,13,9,.6), transparent 70%);
+  }
+}
+@media (max-height: 600px) and (min-width: 600px) {
+  .story-viewport { min-height: 100svh; }
+  .story-copy h1, .story-copy h2 { font-size: clamp(2rem, 5vh, 3rem); }
+  .story-copy { bottom: 3.5rem; top: auto; }
+  .story-description { font-size: 1rem; line-height: 1.45; }
 }
