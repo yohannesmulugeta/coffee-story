@@ -31,8 +31,34 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frameId = 0;
+    let targetTime = 0;
+    let seekPending = false;
     let scrubTween: gsap.core.Tween | undefined;
     let metadataHandler: (() => void) | undefined;
+
+    const requestSeek = () => {
+      if (frameId) return;
+
+      frameId = requestAnimationFrame(() => {
+        frameId = 0;
+        if (video.seeking) {
+          seekPending = true;
+          return;
+        }
+
+        if (Math.abs(video.currentTime - targetTime) > 0.025) {
+          seekPending = false;
+          video.currentTime = targetTime;
+        }
+      });
+    };
+
+    const handleSeeked = () => {
+      if (seekPending || Math.abs(video.currentTime - targetTime) > 0.05) {
+        seekPending = false;
+        requestSeek();
+      }
+    };
 
     const setCopyProgress = (progress: number) => {
       container.querySelectorAll<HTMLElement>("[data-story-copy]").forEach((element) => {
@@ -71,19 +97,15 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
         time: video.duration,
         ease: "none",
         onUpdate: () => {
-          cancelAnimationFrame(frameId);
-          frameId = requestAnimationFrame(() => {
-            if (Math.abs(video.currentTime - playhead.time) > 0.012) {
-              video.currentTime = playhead.time;
-            }
-            setCopyProgress(playhead.time / video.duration);
-          });
+          targetTime = playhead.time;
+          setCopyProgress(playhead.time / video.duration);
+          requestSeek();
         },
         scrollTrigger: {
           trigger: container,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.85,
+          scrub: 1.1,
           invalidateOnRefresh: true,
         },
       });
@@ -92,6 +114,7 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
 
     const handleError = () => setStatus("error");
     video.addEventListener("error", handleError);
+    video.addEventListener("seeked", handleSeeked);
 
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
       prepareVideo();
@@ -105,6 +128,7 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       scrubTween?.scrollTrigger?.kill();
       scrubTween?.kill();
       video.removeEventListener("error", handleError);
+      video.removeEventListener("seeked", handleSeeked);
       if (metadataHandler) video.removeEventListener("loadedmetadata", metadataHandler);
     };
   }, [containerRef, videoRef]);
