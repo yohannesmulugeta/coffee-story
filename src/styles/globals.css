@@ -284,7 +284,7 @@ a:focus-visible {
 }
 
 .story-copy--right {
-  top: clamp(10rem, 27vh, 17rem);
+  bottom: clamp(5rem, 15vh, 10rem);
   right: max(var(--page-pad), 8vw);
 }
 
@@ -857,6 +857,9 @@ a:focus-visible {
   .story-copy--intro { width: min(43rem, calc(100% - var(--page-pad) * 2)); }
   .side-vignette {
     background: linear-gradient(90deg, rgba(12,13,9,.6), transparent 70%);
+  }
+  .story-scroll[data-chapter="1"] .side-vignette {
+    background: linear-gradient(270deg, rgba(12,13,9,.6), transparent 70%);
   }
 }
 @media (max-height: 600px) and (min-width: 600px) {

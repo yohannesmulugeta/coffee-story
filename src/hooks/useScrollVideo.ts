@@ -36,6 +36,8 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     let frameId = 0;
     let tween: gsap.core.Tween | undefined;
     let disposed = false;
+    let unlocked = false;
+    let unlocking = false;
     const playhead = { progress: 0 };
     const copies = Array.from(container.querySelectorAll<HTMLElement>("[data-story-copy]")).map(
       (element) => ({
@@ -53,6 +55,7 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
         element.setAttribute("aria-hidden", String(visibility === 0));
       });
       const active = progress < 0.35 ? 0 : progress < 0.69 ? 1 : 2;
+      container.dataset.chapter = String(active);
       markers.forEach((element, index) => { element.dataset.active = String(index === active); });
       container.style.setProperty("--story-progress", `${progress * 100}%`);
     };
@@ -77,6 +80,10 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     };
     const prepare = () => {
       if (video.readyState < 2 || !Number.isFinite(video.duration) || video.duration <= 0) return;
+      if (!reducedMotion && !unlocked) {
+        unlock();
+        return;
+      }
       clearTimeout(loadingTimeout);
       setStatus("ready");
       if (reducedMotion || tween) return;
@@ -90,6 +97,21 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       });
       ScrollTrigger.refresh();
       requestSeek();
+    };
+    // Some browsers decode seeks but keep painting the poster until playback
+    // has been initialized. Prime once, pause immediately, then use scroll only.
+    // Retry on user input if the browser requires a gesture.
+    const unlock = () => {
+      if (disposed || reducedMotion || unlocked || unlocking || video.readyState < 2) return;
+      unlocking = true;
+      video.muted = true;
+      void video.play().then(() => {
+        video.pause();
+        if (disposed) return;
+        unlocked = true;
+        unlocking = false;
+        prepare();
+      }).catch(() => { unlocking = false; });
     };
     const fail = () => {
       tween?.scrollTrigger?.kill();
@@ -111,6 +133,8 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     video.addEventListener("canplay", prepare);
     video.addEventListener("seeked", handleSeeked);
     video.addEventListener("error", fail);
+    const gestures = ["pointerdown", "touchstart", "keydown", "wheel"] as const;
+    gestures.forEach((event) => window.addEventListener(event, unlock, { passive: true }));
     if (video.error) fail();
     else prepare();
     return () => {
@@ -123,6 +147,8 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       video.removeEventListener("canplay", prepare);
       video.removeEventListener("seeked", handleSeeked);
       video.removeEventListener("error", fail);
+      gestures.forEach((event) => window.removeEventListener(event, unlock));
+      video.pause();
       copies.forEach(({ element }) => {
         gsap.set(element, { clearProps: "opacity,visibility,transform" });
         element.removeAttribute("aria-hidden");
