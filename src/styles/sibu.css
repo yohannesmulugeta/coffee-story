@@ -1,15 +1,16 @@
 .sibu-shell {
-  width: min(100%, 92rem);
+  width: min(100%, 88rem);
   margin: 0 auto;
   padding-inline: var(--page-pad);
 }
 
 .sibu-kicker {
-  margin: 0 0 1rem;
+  margin: 0 0 0.9rem;
   color: #8a6d47;
-  font-size: 0.7rem;
+  font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .sibu-transition {
@@ -22,16 +23,16 @@
 .sibu-transition::before {
   position: absolute;
   inset: 0 0 auto;
-  height: 12rem;
+  height: 10rem;
   content: "";
-  background: linear-gradient(to bottom, #171711 0%, rgba(23, 23, 17, 0.55) 18%, rgba(23, 23, 17, 0) 100%);
-  opacity: 0.16;
+  background: linear-gradient(to bottom, #171711 0%, rgba(23, 23, 17, 0.42) 22%, rgba(23, 23, 17, 0) 100%);
+  opacity: 0.13;
 }
 
 .sibu-transition__inner {
   position: relative;
-  padding-top: clamp(8rem, 14vw, 14rem);
-  padding-bottom: clamp(7rem, 12vw, 11rem);
+  padding-top: clamp(6.5rem, 10vw, 9.5rem);
+  padding-bottom: clamp(5.5rem, 8vw, 8rem);
 }
 
 .sibu-transition h2,
@@ -47,55 +48,100 @@
 }
 
 .sibu-transition h2 {
-  max-width: 11ch;
-  font-size: clamp(4.3rem, 9vw, 9.2rem);
-  line-height: 0.88;
+  max-width: 10ch;
+  font-size: clamp(4.1rem, 8vw, 8.2rem);
+  line-height: 0.89;
 }
 
 .sibu-transition__inner > p:last-child {
-  max-width: 42rem;
-  margin: 2.2rem 0 0 auto;
-  color: #5a554b;
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
-  line-height: 1.8;
+  max-width: 38rem;
+  margin: 1.8rem 0 0 auto;
+  color: #4f4a41;
+  font-size: clamp(1.05rem, 1.25vw, 1.18rem);
+  line-height: 1.72;
+}
+
+.sibu-about,
+.sibu-coffee,
+.sibu-origin,
+.sibu-journey,
+.sibu-contact {
+  padding: clamp(5.5rem, 8.5vw, 8.5rem) 0;
 }
 
 .sibu-about {
-  padding: clamp(7rem, 12vw, 12rem) 0;
   color: #f2ebdd;
   background: #203024;
 }
 
 .sibu-about__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(3rem, 8vw, 8rem);
-  align-items: end;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: stretch;
+}
+
+.sibu-about__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 1rem;
 }
 
 .sibu-about__copy h2 {
-  max-width: 12ch;
-  font-size: clamp(3.2rem, 6vw, 6.5rem);
-  line-height: 0.95;
+  max-width: 11.5ch;
+  font-size: clamp(3.15rem, 5.3vw, 5.9rem);
+  line-height: 0.96;
 }
 
 .sibu-about__copy > p:not(.sibu-kicker) {
-  max-width: 36rem;
-  margin: 2rem 0 0;
-  color: rgba(242, 235, 221, 0.74);
-  font-size: 1.05rem;
-  line-height: 1.8;
+  max-width: 35rem;
+  margin: 1.7rem 0 0;
+  color: rgba(242, 235, 221, 0.82);
+  font-size: clamp(1.03rem, 1.15vw, 1.12rem);
+  line-height: 1.72;
+}
+
+.sibu-about__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 34rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(242, 235, 221, 0.2);
+}
+
+.sibu-about__meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sibu-about__meta strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sibu-about__meta span {
+  max-width: 12rem;
+  color: rgba(242, 235, 221, 0.62);
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 .sibu-text-link {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 0.65rem;
-  margin-top: 2rem;
+  margin-top: 1.8rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid currentColor;
   color: inherit;
-  font-size: 0.78rem;
+  font-size: 0.79rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -103,9 +149,10 @@
 
 .sibu-about__image {
   position: relative;
-  min-height: clamp(30rem, 54vw, 46rem);
+  min-height: clamp(36rem, 50vw, 46rem);
   margin: 0;
   overflow: hidden;
+  background: #314033;
 }
 
 .sibu-about__image img,
@@ -118,7 +165,9 @@
   transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.sibu-about__image img {
+.sibu-about__image img,
+.sibu-origin__panel img,
+.sibu-export > img {
   position: absolute;
   inset: 0;
 }
@@ -126,33 +175,32 @@
 .sibu-about__image:hover img,
 .sibu-coffee__item:hover img,
 .sibu-origin__panel:hover img {
-  transform: scale(1.025);
+  transform: scale(1.02);
 }
 
 .sibu-about__image figcaption {
   position: absolute;
-  right: 1.4rem;
-  bottom: 1.4rem;
-  left: 1.4rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
   padding-top: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
   color: #fff;
-  font-size: 0.62rem;
+  font-size: 0.66rem;
   letter-spacing: 0.16em;
 }
 
 .sibu-coffee {
-  padding: clamp(7rem, 12vw, 12rem) 0;
   color: #24231d;
   background: #f2ebdd;
 }
 
 .sibu-section-heading {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.58fr);
-  gap: 2rem 5rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.62fr);
+  gap: 1.8rem 4.5rem;
   align-items: end;
-  margin-bottom: clamp(4rem, 8vw, 8rem);
+  margin-bottom: clamp(3.6rem, 5.5vw, 5.8rem);
 }
 
 .sibu-section-heading .sibu-kicker {
@@ -162,29 +210,33 @@
 
 .sibu-section-heading h2 {
   max-width: 10ch;
-  font-size: clamp(3.8rem, 7vw, 7.8rem);
-  line-height: 0.9;
+  font-size: clamp(3.7rem, 6vw, 6.8rem);
+  line-height: 0.91;
 }
 
 .sibu-section-heading > p:last-child {
-  max-width: 34rem;
+  max-width: 33rem;
   margin: 0;
-  color: #625c51;
-  font-size: 1.03rem;
-  line-height: 1.75;
+  color: #554f46;
+  font-size: clamp(1.02rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
 }
 
 .sibu-coffee__list {
-  border-top: 1px solid rgba(36, 35, 29, 0.24);
+  border-top: 1px solid rgba(36, 35, 29, 0.22);
 }
 
 .sibu-coffee__item {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
-  gap: clamp(2rem, 6vw, 7rem);
-  padding: clamp(2.2rem, 4vw, 4rem) 0;
-  border-bottom: 1px solid rgba(36, 35, 29, 0.24);
+  grid-template-columns: minmax(0, 1.22fr) minmax(18rem, 0.78fr);
+  gap: clamp(2.2rem, 5vw, 5.5rem);
+  padding: clamp(2.4rem, 3.4vw, 3.6rem) 0;
+  border-bottom: 1px solid rgba(36, 35, 29, 0.22);
   align-items: center;
+}
+
+.sibu-coffee__item:nth-child(even) {
+  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
 }
 
 .sibu-coffee__item:nth-child(even) .sibu-coffee__visual {
@@ -196,109 +248,107 @@
 }
 
 .sibu-coffee__visual {
-  height: clamp(20rem, 38vw, 34rem);
+  height: clamp(24rem, 34vw, 31rem);
   overflow: hidden;
   background: #d8d0c0;
 }
 
+.sibu-coffee__copy {
+  max-width: 31rem;
+}
+
 .sibu-coffee__copy > span {
-  color: #92754f;
-  font-size: 0.72rem;
+  color: #866944;
+  font-size: 0.74rem;
   letter-spacing: 0.18em;
 }
 
 .sibu-coffee__copy h3 {
   max-width: 9ch;
-  margin: 1rem 0 0;
+  margin: 0.9rem 0 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2.5rem, 4.2vw, 4.8rem);
+  font-size: clamp(2.65rem, 4vw, 4.35rem);
   font-weight: 500;
-  line-height: 0.95;
+  line-height: 0.96;
 }
 
 .sibu-coffee__copy p {
-  max-width: 28rem;
-  margin: 1.4rem 0 0;
-  color: #635e54;
-  line-height: 1.75;
+  max-width: 29rem;
+  margin: 1.15rem 0 0;
+  color: #554f46;
+  font-size: clamp(1rem, 1.05vw, 1.08rem);
+  line-height: 1.7;
 }
 
 .sibu-origin {
-  padding: clamp(7rem, 12vw, 12rem) 0;
   color: #f2ebdd;
   background: #171711;
 }
 
 .sibu-section-heading--light > p:last-child {
-  color: rgba(242, 235, 221, 0.66);
+  color: rgba(242, 235, 221, 0.74);
 }
 
 .sibu-origin__grid {
   display: grid;
-  min-height: 47rem;
-  grid-template-columns: 1.25fr 0.75fr;
+  min-height: 52rem;
+  grid-template-columns: 1.28fr 0.72fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .sibu-origin__panel {
   position: relative;
-  min-height: 22rem;
+  min-height: 24rem;
   margin: 0;
   overflow: hidden;
+  background: #23251f;
 }
 
 .sibu-origin__panel--1 {
   grid-row: 1 / 3;
 }
 
-.sibu-origin__panel img,
-.sibu-export > img {
-  position: absolute;
-  inset: 0;
-}
-
 .sibu-origin__shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.05) 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.05) 62%);
 }
 
 .sibu-origin__panel figcaption {
   position: absolute;
   z-index: 2;
-  right: 1.6rem;
-  bottom: 1.5rem;
-  left: 1.6rem;
+  right: 1.7rem;
+  bottom: 1.6rem;
+  left: 1.7rem;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.35rem 1rem;
+  gap: 0.4rem 1rem;
   align-items: end;
 }
 
 .sibu-origin__panel figcaption > span {
   grid-row: 1 / 3;
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
 }
 
 .sibu-origin__panel strong {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(1.6rem, 2.8vw, 3rem);
+  font-size: clamp(1.9rem, 2.7vw, 3.2rem);
   font-weight: 500;
-  line-height: 1;
+  line-height: 0.98;
 }
 
 .sibu-origin__panel small {
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.69rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .sibu-journey {
-  padding: clamp(7rem, 12vw, 12rem) 0;
   color: #24231d;
   background: #e8dfcf;
 }
@@ -312,36 +362,52 @@
 
 .sibu-journey__step {
   position: relative;
-  min-height: 18rem;
-  padding: 1.8rem 1.35rem 2rem;
+  min-height: 16rem;
+  padding: 1.8rem 1.4rem 2.2rem;
+}
+
+.sibu-journey__step::before {
+  position: absolute;
+  top: -0.34rem;
+  left: 1.35rem;
+  width: 0.68rem;
+  height: 0.68rem;
+  content: "";
+  border: 2px solid #e8dfcf;
+  border-radius: 50%;
+  background: #7c6547;
+  box-shadow: 0 0 0 1px rgba(36, 35, 29, 0.28);
 }
 
 .sibu-journey__step + .sibu-journey__step {
-  border-left: 1px solid rgba(36, 35, 29, 0.2);
+  border-left: 1px solid rgba(36, 35, 29, 0.18);
 }
 
 .sibu-journey__step > span {
-  color: #8f7756;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  color: #7c6547;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
 }
 
 .sibu-journey__step h3 {
-  margin: 5rem 0 0;
+  margin: 3rem 0 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  font-size: clamp(2rem, 2.5vw, 2.8rem);
   font-weight: 500;
+  line-height: 1;
 }
 
 .sibu-journey__step p {
   margin: 0.8rem 0 0;
-  color: #625c51;
-  line-height: 1.65;
+  color: #554f46;
+  font-size: 0.98rem;
+  line-height: 1.62;
 }
 
 .sibu-export {
   position: relative;
-  min-height: min(78rem, 92svh);
+  min-height: 76svh;
   overflow: hidden;
   color: #fff;
   background: #171711;
@@ -350,84 +416,150 @@
 .sibu-export__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(13, 18, 13, 0.82) 0%, rgba(13, 18, 13, 0.48) 44%, rgba(13, 18, 13, 0.14) 75%),
-    linear-gradient(to top, rgba(8, 10, 8, 0.62), transparent 55%);
+  background: linear-gradient(90deg, rgba(13, 18, 13, 0.86) 0%, rgba(13, 18, 13, 0.5) 42%, rgba(13, 18, 13, 0.12) 76%),
+    linear-gradient(to top, rgba(8, 10, 8, 0.64), transparent 58%);
 }
 
 .sibu-export__content {
   position: relative;
   z-index: 2;
   display: flex;
-  min-height: min(78rem, 92svh);
-  padding-top: 8rem;
-  padding-bottom: 7rem;
+  min-height: 76svh;
+  padding-top: 6.5rem;
+  padding-bottom: 5.5rem;
   flex-direction: column;
   justify-content: flex-end;
 }
 
 .sibu-export h2 {
   max-width: 8ch;
-  font-size: clamp(4.2rem, 9vw, 9rem);
-  line-height: 0.84;
+  font-size: clamp(4.2rem, 8vw, 8.2rem);
+  line-height: 0.85;
 }
 
 .sibu-export__content > p:not(.sibu-kicker) {
   max-width: 30rem;
-  margin: 1.7rem 0 0;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 1.05rem;
-  line-height: 1.7;
+  margin: 1.4rem 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.08rem;
+  line-height: 1.66;
 }
 
 .sibu-button {
   display: inline-flex;
   width: fit-content;
-  margin-top: 2rem;
+  margin-top: 1.8rem;
   padding: 0.95rem 1.2rem;
   align-items: center;
   gap: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.58);
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  transition: color 220ms ease, background 220ms ease;
+  transition: color 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 
 .sibu-button:hover,
 .sibu-button:focus-visible {
   color: #171711;
   background: #f2ebdd;
+  border-color: #f2ebdd;
+}
+
+.sibu-button--dark {
+  color: #24231d;
+  border-color: #24231d;
+  background: transparent;
+}
+
+.sibu-button--dark:hover,
+.sibu-button--dark:focus-visible {
+  color: #f2ebdd;
+  background: #24231d;
+  border-color: #24231d;
 }
 
 .sibu-contact {
-  padding: clamp(7rem, 12vw, 11rem) 0;
   color: #24231d;
   background: #f2ebdd;
 }
 
 .sibu-contact__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.6fr);
-  gap: 3rem 7rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+  gap: 3rem 6rem;
   align-items: end;
 }
 
 .sibu-contact h2 {
   max-width: 8ch;
-  font-size: clamp(4.2rem, 8vw, 8rem);
-  line-height: 0.88;
+  font-size: clamp(4rem, 7vw, 7.2rem);
+  line-height: 0.89;
 }
 
-.sibu-contact__grid > div:last-child > p {
+.sibu-contact__actions {
+  padding-left: 2rem;
+  border-left: 1px solid rgba(36, 35, 29, 0.2);
+}
+
+.sibu-contact__actions > p {
+  max-width: 32rem;
   margin: 0;
-  color: #625c51;
-  font-size: 1.05rem;
-  line-height: 1.75;
+  color: #554f46;
+  font-size: clamp(1.03rem, 1.08vw, 1.1rem);
+  line-height: 1.7;
 }
 
-/* Sibu single-page header refinements. */
+.sibu-contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.4rem;
+  margin-top: 1.6rem;
+}
+
+.sibu-contact__links .sibu-button,
+.sibu-contact__links .sibu-text-link {
+  margin-top: 0;
+}
+
+/* Footer refinements for the Sibu single-page site. */
+.site-footer {
+  padding-top: clamp(4.5rem, 7vw, 6.5rem);
+}
+
+.footer-main {
+  grid-template-columns: minmax(0, 1.7fr) minmax(10rem, 0.5fr) minmax(12rem, 0.65fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.footer-brand .wordmark {
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+}
+
+.footer-brand p {
+  max-width: 12ch;
+  margin-top: 1.35rem;
+  font-size: clamp(2.5rem, 4vw, 4.35rem);
+  line-height: 0.98;
+}
+
+.site-footer nav,
+.footer-social {
+  font-size: 0.88rem;
+  gap: 0.9rem;
+}
+
+.footer-bottom {
+  margin-top: clamp(3.5rem, 6vw, 5rem);
+  padding-top: 1.25rem;
+  font-size: 0.72rem;
+}
+
+/* Header only: keep the existing cinematic hero untouched. */
 .site-header .wordmark {
   white-space: nowrap;
 }
@@ -447,7 +579,8 @@
     min-height: 34rem;
   }
 
-  .sibu-coffee__item {
+  .sibu-coffee__item,
+  .sibu-coffee__item:nth-child(even) {
     grid-template-columns: 1fr;
   }
 
@@ -459,7 +592,7 @@
   .sibu-origin__grid {
     min-height: 0;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 32rem 24rem;
+    grid-template-rows: 34rem 25rem;
   }
 
   .sibu-origin__panel--1 {
@@ -476,11 +609,23 @@
   }
 
   .sibu-journey__step:nth-child(even) {
-    border-left: 1px solid rgba(36, 35, 29, 0.2);
+    border-left: 1px solid rgba(36, 35, 29, 0.18);
   }
 
   .sibu-journey__step:nth-child(n + 3) {
+    border-top: 1px solid rgba(36, 35, 29, 0.18);
+  }
+
+  .sibu-contact__actions {
+    max-width: 40rem;
+    padding-top: 1.5rem;
+    padding-left: 0;
     border-top: 1px solid rgba(36, 35, 29, 0.2);
+    border-left: 0;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -492,7 +637,7 @@
   }
 
   .sibu-transition h2 {
-    font-size: clamp(3.7rem, 17vw, 5.9rem);
+    font-size: clamp(3.5rem, 16vw, 5.5rem);
   }
 
   .sibu-transition__inner,
@@ -501,25 +646,29 @@
   .sibu-origin,
   .sibu-journey,
   .sibu-contact {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 4.8rem;
+    padding-bottom: 4.8rem;
   }
 
   .sibu-about__copy h2,
   .sibu-section-heading h2 {
-    font-size: clamp(3rem, 13vw, 4.8rem);
+    font-size: clamp(3rem, 12vw, 4.5rem);
+  }
+
+  .sibu-about__meta {
+    grid-template-columns: 1fr 1fr;
   }
 
   .sibu-about__image {
-    min-height: 28rem;
+    min-height: 27rem;
   }
 
   .sibu-section-heading {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 
   .sibu-coffee__visual {
-    height: 23rem;
+    height: 22rem;
   }
 
   .sibu-origin__grid {
@@ -527,7 +676,7 @@
   }
 
   .sibu-origin__panel {
-    min-height: 26rem;
+    min-height: 25rem;
   }
 
   .sibu-origin__panel + .sibu-origin__panel {
@@ -536,30 +685,49 @@
 
   .sibu-journey__track {
     grid-template-columns: 1fr;
+    border-bottom: 0;
   }
 
   .sibu-journey__step,
   .sibu-journey__step:nth-child(even),
   .sibu-journey__step:nth-child(n + 3) {
     min-height: 0;
-    padding: 1.5rem 0 2rem;
+    padding: 1.7rem 0 1.9rem 1.7rem;
     border-top: 0;
-    border-left: 0;
+    border-right: 0;
     border-bottom: 1px solid rgba(36, 35, 29, 0.2);
+    border-left: 0;
+  }
+
+  .sibu-journey__step::before {
+    left: 0;
   }
 
   .sibu-journey__step h3 {
-    margin-top: 2rem;
+    margin-top: 1.7rem;
   }
 
   .sibu-export,
   .sibu-export__content {
-    min-height: 76svh;
+    min-height: 72svh;
   }
 
   .sibu-export h2,
   .sibu-contact h2 {
-    font-size: clamp(3.8rem, 16vw, 6rem);
+    font-size: clamp(3.7rem, 15vw, 5.5rem);
+  }
+
+  .sibu-contact__links {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand p {
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
   }
 }
 
