@@ -18,7 +18,7 @@ export function ScrollStory() {
           <video
             ref={videoRef}
             className="hero-video"
-            src={`${import.meta.env.BASE_URL}video/coffee-scrub-v2.mp4`}
+            data-src={`${import.meta.env.BASE_URL}video/coffee-scrub-v3.mp4`}
             poster={`${import.meta.env.BASE_URL}video/coffee-poster.jpg`}
             muted
             playsInline

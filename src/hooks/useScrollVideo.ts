@@ -33,6 +33,12 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     const container = containerRef.current;
     const video = videoRef.current;
     if (!container || !video) return;
+    if (reducedMotion) {
+      setStatus("ready");
+      return;
+    }
+    const download = new AbortController();
+    let mediaUrl: string | undefined;
     let frameId = 0;
     let tween: gsap.core.Tween | undefined;
     let disposed = false;
@@ -86,7 +92,11 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       }
       clearTimeout(loadingTimeout);
       setStatus("ready");
-      if (reducedMotion || tween) return;
+      if (reducedMotion) return;
+      if (tween) {
+        requestSeek();
+        return;
+      }
       renderCopy(0);
       tween = gsap.to(playhead, {
         progress: 1, ease: "none", onUpdate: requestSeek,
@@ -127,19 +137,36 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     };
     setStatus("loading");
     const loadingTimeout = window.setTimeout(() => {
-      if (video.readyState < 2) fail();
-    }, 15000);
+      if (!unlocked) {
+        download.abort();
+        fail();
+      }
+    }, 45000);
     video.addEventListener("loadeddata", prepare);
     video.addEventListener("canplay", prepare);
     video.addEventListener("seeked", handleSeeked);
     video.addEventListener("error", fail);
     const gestures = ["pointerdown", "touchstart", "keydown", "wheel"] as const;
     gestures.forEach((event) => window.addEventListener(event, unlock, { passive: true }));
-    if (video.error) fail();
-    else prepare();
+    // Scrubbing a partially downloaded remote MP4 can leave a browser seek
+    // pending indefinitely. Download the small clip once, then seek local bytes.
+    void (async () => {
+      try {
+        const response = await fetch(video.dataset.src!, { signal: download.signal });
+        if (!response.ok) throw new Error("Video download failed");
+        const blob = await response.blob();
+        if (disposed || download.signal.aborted) return;
+        mediaUrl = URL.createObjectURL(blob);
+        video.src = mediaUrl;
+        video.load();
+      } catch {
+        if (!disposed) fail();
+      }
+    })();
     return () => {
       disposed = true;
       clearTimeout(loadingTimeout);
+      download.abort();
       cancelAnimationFrame(frameId);
       tween?.scrollTrigger?.kill();
       tween?.kill();
@@ -149,6 +176,9 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       video.removeEventListener("error", fail);
       gestures.forEach((event) => window.removeEventListener(event, unlock));
       video.pause();
+      video.removeAttribute("src");
+      video.load();
+      if (mediaUrl) URL.revokeObjectURL(mediaUrl);
       copies.forEach(({ element }) => {
         gsap.set(element, { clearProps: "opacity,visibility,transform" });
         element.removeAttribute("aria-hidden");
