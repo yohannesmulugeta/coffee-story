@@ -75,6 +75,16 @@ export function SibuSections() {
               Guji, the company works with green coffee prepared for international buyers, with
               attention to quality, origin, and dependable export preparation.
             </p>
+            <div className="sibu-about__meta" aria-label="Sibu Trading highlights">
+              <div>
+                <strong>25+</strong>
+                <span>Years of coffee export experience</span>
+              </div>
+              <div>
+                <strong>Guji</strong>
+                <span>Ethiopia</span>
+              </div>
+            </div>
             <a className="sibu-text-link" href="#coffee">
               Explore our coffee <span aria-hidden="true">↘</span>
             </a>
@@ -192,14 +202,24 @@ export function SibuSections() {
             <p className="sibu-kicker">CONTACT</p>
             <h2>Let&apos;s talk coffee.</h2>
           </div>
-          <div>
+          <div className="sibu-contact__actions">
             <p>
               Tell us the origin, process, grade, quantity, and destination you are looking for.
               Official contact details can be connected here once confirmed.
             </p>
-            <a className="sibu-text-link" href="#story">
-              Back to the story <span aria-hidden="true">↑</span>
-            </a>
+            <div className="sibu-contact__links">
+              <a
+                className="sibu-button sibu-button--dark"
+                href="https://yohannesmulugeta.github.io/Sibu-trading/contact/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Request coffee <span aria-hidden="true">↗</span>
+              </a>
+              <a className="sibu-text-link" href="#story">
+                Back to the story <span aria-hidden="true">↑</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
