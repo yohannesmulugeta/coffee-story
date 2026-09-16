@@ -5,9 +5,9 @@ export function Footer() {
     <footer className="site-footer">
       <div className="footer-main">
         <div className="footer-brand">
-          <a className="wordmark" href="#story">
+          <a className="wordmark" href="#story" aria-label="Sibu Trading PLC — back to the story">
             <span className="wordmark-mark" aria-hidden="true" />
-            {siteConfig.name.toUpperCase()}
+            SIBU TRADING PLC
           </a>
           <p>Rooted in Ethiopia.<br />Carried through generations.</p>
         </div>
@@ -18,10 +18,16 @@ export function Footer() {
           ))}
         </nav>
 
-        <div className="footer-social" aria-label="Company location">
-          <span>Sibu Trading PLC</span>
+        <div className="footer-social" aria-label="Company information">
           <span>Guji, Ethiopia</span>
-          <a href="#contact">Start a conversation</a>
+          <span>Premium Ethiopian green coffee</span>
+          <a
+            href="https://yohannesmulugeta.github.io/Sibu-trading/contact/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Start a conversation ↗
+          </a>
         </div>
       </div>
       <div className="footer-bottom">
