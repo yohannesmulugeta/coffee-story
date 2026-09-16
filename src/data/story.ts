@@ -8,13 +8,16 @@ export type StoryChapter = {
 };
 
 export const siteConfig = {
-  name: "Coffee Legacy",
+  name: "Sibu Trading",
   navigation: [
     { label: "Story", href: "#story" },
-    { label: "Legacy", href: "#legacy" },
+    { label: "About", href: "#about" },
+    { label: "Coffee", href: "#coffee" },
+    { label: "Origin", href: "#origin" },
+    { label: "Journey", href: "#journey" },
     { label: "Contact", href: "#contact" },
   ],
-  footerLinks: ["Email", "Instagram", "LinkedIn"],
+  footerLinks: [] as string[],
 };
 
 export const intro = {
