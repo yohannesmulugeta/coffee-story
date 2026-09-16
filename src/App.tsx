@@ -1,7 +1,7 @@
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { LegacySection } from "./components/LegacySection";
 import { ScrollStory } from "./components/ScrollStory";
+import { SibuSections } from "./components/SibuSections";
 
 export default function App() {
   return (
@@ -9,7 +9,7 @@ export default function App() {
       <Header />
       <main>
         <ScrollStory />
-        <LegacySection />
+        <SibuSections />
       </main>
       <Footer />
     </>
