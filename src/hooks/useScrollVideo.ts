@@ -10,6 +10,21 @@ type ScrollVideoOptions = {
   videoRef: RefObject<HTMLVideoElement | null>;
 };
 
+type NetworkInformation = {
+  downlink?: number;
+  effectiveType?: "slow-2g" | "2g" | "3g" | "4g";
+  saveData?: boolean;
+};
+
+const chooseVideoSource = (video: HTMLVideoElement) => {
+  const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+  const slowConnection = connection?.saveData
+    || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "")
+    || (connection?.downlink !== undefined && connection.downlink < 5);
+
+  return slowConnection ? video.dataset.srcSd! : video.dataset.srcHd!;
+};
+
 const visibilityAt = (progress: number, start: number, end: number) => {
   if (progress < start || progress > end) return 0;
   const value = Math.min(start === 0 ? 1 : (progress - start) / 0.035,
@@ -159,7 +174,8 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     // pending indefinitely. Download the small clip once, then seek local bytes.
     void (async () => {
       try {
-        const response = await fetch(video.dataset.src!, { signal: download.signal });
+        const source = chooseVideoSource(video);
+        const response = await fetch(source, { signal: download.signal });
         if (!response.ok) throw new Error("Video download failed");
         const total = Number(response.headers.get("content-length"));
         const reader = response.body?.getReader();
