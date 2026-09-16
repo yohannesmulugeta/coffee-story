@@ -2,7 +2,7 @@ import { siteConfig } from "../data/story";
 
 export function Footer() {
   return (
-    <footer id="contact" className="site-footer">
+    <footer className="site-footer">
       <div className="footer-main">
         <div className="footer-brand">
           <a className="wordmark" href="#story">
@@ -13,16 +13,20 @@ export function Footer() {
         </div>
 
         <nav aria-label="Footer navigation">
-          {siteConfig.navigation.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
+          {siteConfig.navigation.map((item) => (
+            <a key={item.href} href={item.href}>{item.label}</a>
+          ))}
         </nav>
 
-        <div className="footer-social" aria-label="Social links coming soon">
-          {siteConfig.footerLinks.map((label) => <span key={label}>{label}</span>)}
+        <div className="footer-social" aria-label="Company location">
+          <span>Sibu Trading PLC</span>
+          <span>Guji, Ethiopia</span>
+          <a href="#contact">Start a conversation</a>
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} Coffee Legacy. All rights reserved.</p>
-        <p>Made with respect for the journey.</p>
+        <p>© {new Date().getFullYear()} Sibu Trading PLC. All rights reserved.</p>
+        <p>Ethiopian green coffee · Guji</p>
       </div>
     </footer>
   );
