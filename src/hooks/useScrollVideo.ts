@@ -19,6 +19,7 @@ const visibilityAt = (progress: number, start: number, end: number) => {
 
 export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
   const [status, setStatus] = useState<VideoStatus>("loading");
+  const [loadProgress, setLoadProgress] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -69,7 +70,7 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
     // Allow each seek to decode and paint. Coalesce inputs to the latest target,
     // never interrupt an in-flight seek, and never keep an idle rAF loop alive.
     const requestSeek = () => {
-      if (disposed || frameId || reducedMotion || video.error) return;
+      if (disposed || frameId || reducedMotion || !unlocked || video.error) return;
       frameId = requestAnimationFrame(() => {
         frameId = 0;
         if (video.seeking || video.readyState < 2) return;
@@ -84,28 +85,32 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       renderCopy(video.currentTime / video.duration);
       requestSeek();
     };
-    const prepare = () => {
-      if (video.readyState < 2 || !Number.isFinite(video.duration) || video.duration <= 0) return;
-      if (!reducedMotion && !unlocked) {
-        unlock();
-        return;
-      }
-      clearTimeout(loadingTimeout);
-      setStatus("ready");
-      if (reducedMotion) return;
-      if (tween) {
-        requestSeek();
-        return;
-      }
+    const startScrub = () => {
+      if (tween) return;
       renderCopy(0);
       tween = gsap.to(playhead, {
-        progress: 1, ease: "none", onUpdate: requestSeek,
+        progress: 1, ease: "none",
+        onUpdate: () => {
+          if (!unlocked) renderCopy(playhead.progress);
+          requestSeek();
+        },
         scrollTrigger: {
           trigger: container, start: "top top", end: "bottom bottom",
           scrub: 0.45, invalidateOnRefresh: true,
         },
       });
       ScrollTrigger.refresh();
+      requestSeek();
+    };
+    const prepare = () => {
+      if (video.readyState < 2 || !Number.isFinite(video.duration) || video.duration <= 0) return;
+      if (!unlocked) {
+        unlock();
+        return;
+      }
+      clearTimeout(loadingTimeout);
+      setStatus("ready");
+      startScrub();
       requestSeek();
     };
     // Some browsers decode seeks but keep painting the poster until playback
@@ -136,25 +141,48 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       setStatus("error");
     };
     setStatus("loading");
+    setLoadProgress(0);
     const loadingTimeout = window.setTimeout(() => {
       if (!unlocked) {
         download.abort();
         fail();
       }
-    }, 45000);
+    }, 120000);
     video.addEventListener("loadeddata", prepare);
     video.addEventListener("canplay", prepare);
     video.addEventListener("seeked", handleSeeked);
     video.addEventListener("error", fail);
     const gestures = ["pointerdown", "touchstart", "keydown", "wheel"] as const;
     gestures.forEach((event) => window.addEventListener(event, unlock, { passive: true }));
+    startScrub();
     // Scrubbing a partially downloaded remote MP4 can leave a browser seek
     // pending indefinitely. Download the small clip once, then seek local bytes.
     void (async () => {
       try {
         const response = await fetch(video.dataset.src!, { signal: download.signal });
         if (!response.ok) throw new Error("Video download failed");
-        const blob = await response.blob();
+        const total = Number(response.headers.get("content-length"));
+        const reader = response.body?.getReader();
+        let blob: Blob;
+        if (reader) {
+          const parts: Uint8Array<ArrayBuffer>[] = [];
+          let received = 0;
+          let lastPercent = 0;
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            parts.push(new Uint8Array(value));
+            received += value.byteLength;
+            const percent = total > 0 ? Math.min(99, Math.floor(received / total * 100)) : 0;
+            if (!disposed && percent !== lastPercent) {
+              lastPercent = percent;
+              setLoadProgress(percent);
+            }
+          }
+          blob = new Blob(parts, { type: "video/mp4" });
+        } else {
+          blob = await response.blob();
+        }
         if (disposed || download.signal.aborted) return;
         mediaUrl = URL.createObjectURL(blob);
         video.src = mediaUrl;
@@ -185,5 +213,5 @@ export function useScrollVideo({ containerRef, videoRef }: ScrollVideoOptions) {
       });
     };
   }, [containerRef, videoRef, reducedMotion]);
-  return { status, reducedMotion };
+  return { status, reducedMotion, loadProgress };
 }

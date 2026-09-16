@@ -215,6 +215,18 @@ a:focus-visible {
   transition: opacity 300ms ease;
 }
 
+.film-loading {
+  position: absolute;
+  z-index: 10;
+  top: 5.5rem;
+  left: var(--page-pad);
+  padding: 0.5rem 0.75rem;
+  background: rgba(23, 23, 17, 0.65);
+  color: #f2ebdd;
+  pointer-events: none;
+}
+.film-loading small { font-size: 0.8rem; }
+
 .video-state > span {
   font-size: 0.8rem;
   font-weight: 600;

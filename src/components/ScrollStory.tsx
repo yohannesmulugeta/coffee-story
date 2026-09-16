@@ -7,7 +7,7 @@ import { StoryIntro } from "./StoryIntro";
 export function ScrollStory() {
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { status, reducedMotion } = useScrollVideo({ containerRef, videoRef });
+  const { status, reducedMotion, loadProgress } = useScrollVideo({ containerRef, videoRef });
   const staticStory = status === "error" || reducedMotion;
 
   return (
@@ -31,10 +31,8 @@ export function ScrollStory() {
         </div>
 
         {status === "loading" && !reducedMotion && (
-          <div className="video-state" role="status" aria-live="polite">
-            <span>COFFEE LEGACY</span>
-            <i />
-            <small>Preparing the journey</small>
+          <div className="film-loading" role="status">
+            <small>Loading the film{loadProgress > 0 ? ` · ${loadProgress}%` : "…"}</small>
           </div>
         )}
 
