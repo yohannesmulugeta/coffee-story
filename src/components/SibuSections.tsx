@@ -1,3 +1,5 @@
+import { SibuMotion } from "./SibuMotion";
+
 const mediaBase =
   "https://raw.githubusercontent.com/yohannesmulugeta/Sibu-trading/main/public/images/";
 
@@ -54,8 +56,10 @@ const journey = [
 export function SibuSections() {
   return (
     <>
+      <SibuMotion />
+
       <section className="sibu-transition" aria-label="Sibu Trading introduction">
-        <div className="sibu-shell sibu-transition__inner">
+        <div className="sibu-shell sibu-transition__inner" data-sibu-heading>
           <p className="sibu-kicker">SIBU TRADING PLC · GUJI, ETHIOPIA</p>
           <h2>A legacy carried forward.</h2>
           <p>
@@ -67,7 +71,7 @@ export function SibuSections() {
 
       <section className="sibu-about" id="about">
         <div className="sibu-shell sibu-about__grid">
-          <div className="sibu-about__copy">
+          <div className="sibu-about__copy" data-sibu-heading>
             <p className="sibu-kicker">ABOUT SIBU</p>
             <h2>From generations of coffee knowledge to a modern Ethiopian export company.</h2>
             <p>
@@ -90,11 +94,12 @@ export function SibuSections() {
             </a>
           </div>
 
-          <figure className="sibu-about__image">
+          <figure className="sibu-about__image" data-sibu-image-reveal>
             <img
               src={`${mediaBase}ethiopia-coffee-growers-hawassa.webp`}
               alt="Coffee-growing family in Ethiopia"
               loading="lazy"
+              data-sibu-parallax
             />
             <figcaption>ETHIOPIA · COFFEE BEGINS WITH PEOPLE</figcaption>
           </figure>
@@ -103,7 +108,7 @@ export function SibuSections() {
 
       <section className="sibu-coffee" id="coffee">
         <div className="sibu-shell">
-          <div className="sibu-section-heading">
+          <div className="sibu-section-heading" data-sibu-heading>
             <p className="sibu-kicker">OUR COFFEE</p>
             <h2>Coffee shaped by origin.</h2>
             <p>
@@ -114,9 +119,9 @@ export function SibuSections() {
 
           <div className="sibu-coffee__list">
             {coffeeTypes.map((coffee) => (
-              <article className="sibu-coffee__item" key={coffee.title}>
-                <div className="sibu-coffee__visual">
-                  <img src={coffee.image} alt={coffee.title} loading="lazy" />
+              <article className="sibu-coffee__item" key={coffee.title} data-sibu-coffee-item>
+                <div className="sibu-coffee__visual" data-sibu-image-reveal>
+                  <img src={coffee.image} alt={coffee.title} loading="lazy" data-sibu-parallax />
                 </div>
                 <div className="sibu-coffee__copy">
                   <span>{coffee.number}</span>
@@ -131,7 +136,7 @@ export function SibuSections() {
 
       <section className="sibu-origin" id="origin">
         <div className="sibu-shell">
-          <div className="sibu-section-heading sibu-section-heading--light">
+          <div className="sibu-section-heading sibu-section-heading--light" data-sibu-heading>
             <p className="sibu-kicker">FROM THE LAND</p>
             <h2>The story remains connected to where coffee grows.</h2>
             <p>
@@ -142,8 +147,12 @@ export function SibuSections() {
 
           <div className="sibu-origin__grid">
             {origins.map((origin, index) => (
-              <figure className={`sibu-origin__panel sibu-origin__panel--${index + 1}`} key={origin.name}>
-                <img src={origin.image} alt={origin.name} loading="lazy" />
+              <figure
+                className={`sibu-origin__panel sibu-origin__panel--${index + 1}`}
+                key={origin.name}
+                data-sibu-origin-panel
+              >
+                <img src={origin.image} alt={origin.name} loading="lazy" data-sibu-parallax />
                 <div className="sibu-origin__shade" />
                 <figcaption>
                   <span>0{index + 1}</span>
@@ -158,7 +167,7 @@ export function SibuSections() {
 
       <section className="sibu-journey" id="journey">
         <div className="sibu-shell">
-          <div className="sibu-section-heading">
+          <div className="sibu-section-heading" data-sibu-heading>
             <p className="sibu-kicker">COFFEE JOURNEY</p>
             <h2>From harvest to shipment.</h2>
             <p>
@@ -168,6 +177,7 @@ export function SibuSections() {
           </div>
 
           <div className="sibu-journey__track" role="list">
+            <span className="sibu-journey__motion-line" aria-hidden="true" />
             {journey.map(([number, title, description]) => (
               <article className="sibu-journey__step" role="listitem" key={number}>
                 <span>{number}</span>
@@ -198,11 +208,11 @@ export function SibuSections() {
 
       <section className="sibu-contact" id="contact">
         <div className="sibu-shell sibu-contact__grid">
-          <div>
+          <div data-sibu-reveal>
             <p className="sibu-kicker">CONTACT</p>
             <h2>Let&apos;s talk coffee.</h2>
           </div>
-          <div className="sibu-contact__actions">
+          <div className="sibu-contact__actions" data-sibu-reveal>
             <p>
               Tell us the origin, process, grade, quantity, and destination you are looking for.
               Official contact details can be connected here once confirmed.
